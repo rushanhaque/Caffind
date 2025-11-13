@@ -1,14 +1,17 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import { Coffee, MapPin, Star, Users, TrendingUp, Sparkles } from 'lucide-react'
+import { Coffee, MapPin, Star, Users, TrendingUp, Sparkles, LogIn, UserPlus } from 'lucide-react'
 import CafeFinder from '@/components/CafeFinder'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
+import { useAuth } from '@/contexts/AuthContext'
+import Link from 'next/link'
 
 export default function Home() {
   const [isVisible, setIsVisible] = useState(false)
   const [activeView, setActiveView] = useState<'finder' | 'map'>('finder')
+  const { user } = useAuth()
   
   useEffect(() => {
     setIsVisible(true)
@@ -48,20 +51,39 @@ export default function Home() {
             Caffind uses AI to find the perfect cafe in Moradabad based on your mood, preferences, and location
           </p>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
-            <button 
-              onClick={handleFindCafeClick}
-              className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
-            >
-              Find My Cafe
-            </button>
-            <button 
-              onClick={handleViewMapClick}
-              className="bg-white hover:bg-gray-50 text-amber-600 border-2 border-amber-500 font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-md"
-            >
-              View Map
-            </button>
-          </div>
+          {!user ? (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <Link 
+                href="/signup" 
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
+              >
+                <UserPlus className="w-5 h-5" />
+                Sign Up
+              </Link>
+              <Link 
+                href="/login" 
+                className="bg-white hover:bg-gray-50 text-amber-600 border-2 border-amber-500 font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-md flex items-center justify-center gap-2"
+              >
+                <LogIn className="w-5 h-5" />
+                Login
+              </Link>
+            </div>
+          ) : (
+            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-16">
+              <button 
+                onClick={handleFindCafeClick}
+                className="bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-600 hover:to-orange-600 text-white font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-lg hover:shadow-xl"
+              >
+                Find My Cafe
+              </button>
+              <button 
+                onClick={handleViewMapClick}
+                className="bg-white hover:bg-gray-50 text-amber-600 border-2 border-amber-500 font-bold py-4 px-8 rounded-xl transition-all transform hover:scale-105 shadow-md"
+              >
+                View Map
+              </button>
+            </div>
+          )}
         </div>
         
         {/* Stats Section */}
@@ -82,9 +104,11 @@ export default function Home() {
       </div>
 
       {/* Cafe Finder Section */}
-      <div className="container mx-auto px-4 pb-20 flex-grow">
-        <CafeFinder />
-      </div>
+      {user && (
+        <div className="container mx-auto px-4 pb-20 flex-grow">
+          <CafeFinder />
+        </div>
+      )}
       
       <Footer />
     </main>

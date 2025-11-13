@@ -22,6 +22,7 @@ import {
   Volume2,
   Award
 } from 'lucide-react'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface PreferenceFormProps {
   onSubmit: (preferences: UserPreferences) => void
@@ -43,9 +44,26 @@ export default function PreferenceForm({ onSubmit }: PreferenceFormProps) {
   
   const [activeMood, setActiveMood] = useState<string>('')
   const [activeCuisine, setActiveCuisine] = useState<string>('')
+  const { user, token } = useAuth()
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
+    
+    // Save preferences to user profile if authenticated
+    if (user && token) {
+      try {
+        await fetch('/api/user', {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ preferences }),
+        })
+      } catch (error) {
+        console.error('Error saving preferences:', error)
+      }
+    }
+    
     onSubmit(preferences)
   }
 
@@ -175,12 +193,11 @@ export default function PreferenceForm({ onSubmit }: PreferenceFormProps) {
           className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-amber-500 focus:border-transparent bg-gray-50 interactive-btn"
         >
           <option value="">Any area in Moradabad</option>
-          <option value="town hall">Town Hall</option>
-          <option value="budh bazaar">Budh Bazaar</option>
-          <option value="mda">MDA</option>
           <option value="civil lines">Civil Lines</option>
-          <option value="budhi vihar">Budhi Vihar</option>
-          <option value="delhi road">Delhi Road</option>
+          <option value="mall road">Mall Road</option>
+          <option value="sadar bazaar">Sadar Bazaar</option>
+          <option value="jahangirabad">Jahangirabad</option>
+          <option value="rajput ganj">Rajput Ganj</option>
         </select>
       </div>
 

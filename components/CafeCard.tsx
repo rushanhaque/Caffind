@@ -22,9 +22,9 @@ import {
   ChevronDown,
   ChevronUp
 } from 'lucide-react'
-import { isFavorite, toggleFavorite } from '@/utils/favorites'
 import { calculateDistance, formatDistance } from '@/utils/distance'
-import { shareCafe } from '@/utils/share'
+import { shareSingleCafe } from '@/utils/share'
+import { useAuth } from '@/contexts/AuthContext'
 
 interface CafeCardProps {
   cafe: Cafe
@@ -37,12 +37,14 @@ export default function CafeCard({ cafe, userLocation, onSelect }: CafeCardProps
   const [favorite, setFavorite] = useState(false)
   const [distance, setDistance] = useState<string | null>(null)
   const [showMoreInfo, setShowMoreInfo] = useState(false)
+  const { user, token } = useAuth()
 
   useEffect(() => {
-    if (cafe.id) {
-      setFavorite(isFavorite(cafe.id))
+    // Check if cafe is in user's favorites
+    if (user) {
+      checkFavoriteStatus()
     }
-  }, [cafe.id])
+  }, [user, cafe.id])
 
   useEffect(() => {
     if (userLocation && cafe.location) {
@@ -51,15 +53,45 @@ export default function CafeCard({ cafe, userLocation, onSelect }: CafeCardProps
     }
   }, [userLocation, cafe.location])
 
-  const handleFavoriteToggle = () => {
-    if (cafe.id) {
-      const newFavorite = toggleFavorite(cafe.id)
-      setFavorite(newFavorite)
+  const checkFavoriteStatus = async () => {
+    try {
+      const response = await fetch('/api/favorites')
+      const data = await response.json()
+      if (response.ok) {
+        setFavorite(data.favorites.includes(cafe.id))
+      }
+    } catch (error) {
+      console.error('Error checking favorite status:', error)
+    }
+  }
+
+  const handleFavoriteToggle = async () => {
+    if (!user || !token) {
+      // Redirect to login if not authenticated
+      window.location.href = '/login'
+      return
+    }
+    
+    try {
+      const method = favorite ? 'DELETE' : 'POST'
+      const response = await fetch('/api/favorites', {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ cafeId: cafe.id }),
+      })
+      
+      if (response.ok) {
+        setFavorite(!favorite)
+      }
+    } catch (error) {
+      console.error('Error toggling favorite:', error)
     }
   }
 
   const handleShare = () => {
-    shareCafe(cafe)
+    shareSingleCafe(cafe)
   }
 
   const getPriceSymbols = () => {

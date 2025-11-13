@@ -192,10 +192,10 @@ function filterCafesByPreferences(cafes: Cafe[], preferences: UserPreferences): 
   }
 
   // Filter by dietary restrictions
-  if (preferences.dietaryRestrictions.length > 0) {
+  if (preferences.dietaryRestrictions && preferences.dietaryRestrictions.length > 0) {
     filtered = filtered.filter((cafe) =>
-      preferences.dietaryRestrictions.some((restriction) =>
-        cafe.dietaryOptions?.some((option) =>
+      preferences.dietaryRestrictions.some((restriction: string) =>
+        cafe.dietaryOptions?.some((option: string) =>
           option.toLowerCase().includes(restriction.toLowerCase())
         )
       )
@@ -203,10 +203,10 @@ function filterCafesByPreferences(cafes: Cafe[], preferences: UserPreferences): 
   }
 
   // Filter by amenities
-  if (preferences.amenities.length > 0) {
+  if (preferences.amenities && preferences.amenities.length > 0) {
     filtered = filtered.filter((cafe) =>
-      preferences.amenities.some((amenity) =>
-        cafe.amenities?.some((cafeAmenity) =>
+      preferences.amenities.some((amenity: string) =>
+        cafe.amenities?.some((cafeAmenity: string) =>
           cafeAmenity.toLowerCase().includes(amenity.toLowerCase())
         )
       )

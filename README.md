@@ -1,189 +1,185 @@
-# Cafe Finder Delhi ☕
+# Caffind - AI-Powered Cafe Discovery
 
-An AI-powered cafe finder application for Delhi that suggests cafes based on user preferences, mood, and location. The app provides the shortest route to suggested cafes using Google Maps integration.
+Caffind is a full-stack web application that helps users discover the perfect cafe in Moradabad based on their preferences, mood, and location. The application uses AI-powered recommendations and provides features like cafe favorites, user authentication, and interactive maps.
 
 ## Features
 
-- 🤖 **AI-Powered Recommendations**: Uses OpenAI to intelligently match cafes based on your preferences
-- 🗺️ **Interactive Maps**: Google Maps integration for viewing cafe locations and getting directions
-- 🎯 **Smart Filtering**: Filter cafes by mood, cuisine, ambiance, price range, dietary restrictions, and amenities
-- 📍 **Location-Based**: Automatically detects your location or allows manual area selection
-- 🛣️ **Route Planning**: Get the shortest route to your chosen cafe with distance and duration
-- 📱 **Responsive Design**: Beautiful, modern UI that works on all devices
-- ⭐ **Enhanced Features**:
-  - Multiple view modes (List and Map)
-  - Cafe ratings and reviews
-  - Contact information (phone, website)
-  - Opening hours
-  - Detailed cafe descriptions
-  - Amenities and dietary options
+- AI-powered cafe recommendations based on user preferences
+- User authentication (signup/login)
+- Save favorite cafes
+- Interactive map view with directions
+- Modern, responsive UI with animations
+- User profile management
+- Cafe search and filtering
 
 ## Tech Stack
 
-- **Frontend**: Next.js 14, React, TypeScript
-- **Styling**: Tailwind CSS
-- **AI Integration**: OpenAI API
-- **Maps**: Google Maps JavaScript API
-- **Icons**: Lucide React
+- **Frontend**: Next.js 14, React, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes
+- **Database**: MongoDB with Mongoose
+- **Authentication**: JWT tokens with bcrypt for password hashing
+- **AI Integration**: OpenAI API for intelligent cafe recommendations
+- **Maps**: Leaflet.js for interactive maps
+- **UI Components**: Lucide React icons
 
-## Setup Instructions
+## Prerequisites
 
-### 1. Clone the repository
+- Node.js (v16 or higher)
+- MongoDB (local or cloud instance)
+- OpenAI API key (optional, for AI recommendations)
 
-```bash
-git clone <repository-url>
-cd "cafe finder new"
-```
+## Getting Started
 
-### 2. Install dependencies
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd cafe-finder-new
+   ```
 
-```bash
-npm install
-```
+2. **Install dependencies**:
+   ```bash
+   npm install
+   ```
 
-### 3. Set up environment variables
+3. **Set up environment variables**:
+   Create a `.env.local` file in the root directory with the following variables:
+   ```env
+   MONGODB_URI=mongodb://localhost:27017/caffind
+   JWT_SECRET=your-super-secret-jwt-key
+   OPENAI_API_KEY=your-openai-api-key-here
+   ```
 
-Create a `.env.local` file in the root directory:
+4. **Start MongoDB**:
+   Make sure MongoDB is running on your system. You can use:
+   ```bash
+   mongod
+   ```
 
-```env
-# OpenAI API Key for AI recommendations
-OPENAI_API_KEY=your_openai_api_key_here
+5. **Initialize the database**:
+   ```bash
+   npm run init-db
+   ```
 
-# Google Maps API Key for location and routing
-NEXT_PUBLIC_GOOGLE_MAPS_API_KEY=your_google_maps_api_key_here
-```
+6. **Run the development server**:
+   ```bash
+   npm run dev
+   ```
 
-### 4. Get API Keys
-
-#### OpenAI API Key
-1. Go to [OpenAI Platform](https://platform.openai.com/)
-2. Sign up or log in
-3. Navigate to API Keys section
-4. Create a new API key
-5. Copy and paste it into `.env.local`
-
-#### Google Maps API Key
-1. Go to [Google Cloud Console](https://console.cloud.google.com/)
-2. Create a new project or select an existing one
-3. Enable the following APIs:
-   - Maps JavaScript API
-   - Places API
-   - Directions API
-   - Geocoding API
-4. Go to Credentials and create an API key
-5. Restrict the API key to your domain (optional but recommended)
-6. Copy and paste it into `.env.local`
-
-### 5. Run the development server
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) in your browser.
-
-## Usage
-
-1. **Fill in your preferences**:
-   - Select your current mood
-   - Choose cuisine preference
-   - Set preferred ambiance
-   - Select price range
-   - Choose area in Delhi
-   - Add dietary restrictions and amenities
-   - Select occasion and time of day
-
-2. **Click "Find My Perfect Cafe"** to get AI-powered recommendations
-
-3. **View results** in List or Map view
-
-4. **Click "Get Directions"** on any cafe to see the route on the map
-
-5. **Switch between views** using the List/Map toggle
+7. **Access the application**:
+   Open your browser and navigate to `http://localhost:3000`
 
 ## Project Structure
 
 ```
-cafe-finder-delhi/
-├── app/
-│   ├── api/
-│   │   └── recommend-cafes/
-│   │       └── route.ts          # API endpoint for cafe recommendations
-│   ├── globals.css               # Global styles
-│   ├── layout.tsx                # Root layout
-│   └── page.tsx                  # Home page
-├── components/
-│   ├── CafeCard.tsx              # Individual cafe card component
-│   ├── CafeFinder.tsx            # Main cafe finder component
-│   ├── CafeResults.tsx           # Results display component
-│   ├── Header.tsx                # Header component
-│   ├── LoadingSpinner.tsx       # Loading indicator
-│   ├── MapView.tsx               # Google Maps integration
-│   └── PreferenceForm.tsx       # User preference form
-├── types/
-│   └── index.ts                  # TypeScript type definitions
-├── package.json
-├── tsconfig.json
-├── tailwind.config.js
-└── README.md
+.
+├── app/                    # Next.js app directory
+│   ├── api/               # API routes
+│   │   ├── all-cafes/     # Get all cafes
+│   │   ├── auth/          # Authentication routes
+│   │   ├── favorites/     # User favorites
+│   │   ├── recommend-cafes/ # AI cafe recommendations
+│   │   └── user/          # User profile
+│   ├── login/             # Login page
+│   ├── signup/            # Signup page
+│   ├── profile/           # User profile page
+│   ├── favorites/         # Favorites page
+│   ├── layout.tsx         # Root layout
+│   └── page.tsx           # Home page
+├── components/            # React components
+├── contexts/              # React contexts
+├── lib/                   # Utility functions
+├── models/                # Mongoose models
+├── scripts/               # Utility scripts
+├── types/                 # TypeScript types
+├── utils/                 # Helper functions
+└── ...
 ```
 
 ## API Endpoints
 
-### POST `/api/recommend-cafes`
+### Authentication
+- `POST /api/auth/signup` - Create a new user
+- `POST /api/auth/login` - Login user
 
-Recommends cafes based on user preferences.
+### User
+- `GET /api/user` - Get user profile
+- `PUT /api/user` - Update user preferences
 
-**Request Body:**
-```json
-{
-  "mood": "relaxed",
-  "cuisine": "continental",
-  "ambiance": "casual",
-  "priceRange": "moderate",
-  "dietaryRestrictions": ["vegetarian"],
-  "amenities": ["wifi", "parking"],
-  "location": "khan market",
-  "occasion": "friends",
-  "timeOfDay": "afternoon"
-}
-```
+### Cafes
+- `GET /api/all-cafes` - Get all cafes
+- `POST /api/recommend-cafes` - Get AI-powered cafe recommendations
 
-**Response:**
-```json
-{
-  "cafes": [...],
-  "count": 5
-}
-```
+### Favorites
+- `GET /api/favorites` - Get user's favorite cafes
+- `POST /api/favorites` - Add cafe to favorites
+- `DELETE /api/favorites` - Remove cafe from favorites
 
-## Future Enhancements
+## Database Models
 
-- [ ] Real-time cafe data from external APIs (Zomato, Google Places)
-- [ ] User accounts and favorite cafes
-- [ ] Reviews and ratings system
-- [ ] Cafe photos and galleries
-- [ ] Real-time availability and wait times
-- [ ] Reservation system
-- [ ] Social sharing features
-- [ ] Multi-language support
-- [ ] Advanced filtering options
-- [ ] Price comparison
-- [ ] Menu previews
+### User
+- name: String
+- email: String (unique)
+- password: String (hashed)
+- favorites: Array of cafe IDs
+- preferences: User preferences object
+- createdAt: Date
 
-## License
+### Cafe
+- name: String
+- address: String
+- location: Object with lat/lng
+- description: String
+- rating: Number
+- reviewCount: Number
+- cuisine: String
+- priceRange: String
+- ambiance: String
+- openingHours: String
+- phone: String
+- website: String
+- amenities: Array of strings
+- dietaryOptions: Array of strings
+- imageUrl: String
+- distance: Number
+- isOpen: Boolean
+- priceLevel: Number
+- photos: Array of strings
+- menuUrl: String
+- reservationUrl: String
+- socialMedia: Object
+- createdAt: Date
 
-MIT License
+## Authentication Flow
+
+1. Users can sign up for a new account or log in with existing credentials
+2. On successful login, a JWT token is generated and stored in localStorage
+3. The token is used to authenticate protected API routes
+4. User data is stored in React context for easy access throughout the application
+
+## Development
+
+### Available Scripts
+
+- `npm run dev` - Start development server
+- `npm run build` - Build for production
+- `npm run start` - Start production server
+- `npm run lint` - Run ESLint
+- `npm run init-db` - Initialize database with cafe data
+
+### Adding New Features
+
+1. Create new components in the `components/` directory
+2. Add new API routes in the `app/api/` directory
+3. Update TypeScript types in the `types/` directory as needed
+4. Add new utility functions in the `lib/` or `utils/` directories
 
 ## Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+1. Fork the repository
+2. Create a new branch for your feature
+3. Make your changes
+4. Submit a pull request
 
-## Support
+## License
 
-For issues and questions, please open an issue on GitHub.
-
----
-
-Made with ☕ in Delhi
-
+This project is licensed under the MIT License.
