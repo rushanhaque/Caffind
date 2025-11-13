@@ -104,6 +104,111 @@ const MORADABAD_CAFES: Cafe[] = [
   },
 ]
 
+// Adding more cafe options for Moradabad
+const ADDITIONAL_CAFES: Cafe[] = [
+  {
+    id: '26',
+    name: 'Brew & Bean',
+    address: 'Katra, Moradabad',
+    location: { lat: 28.8456, lng: 78.7712, address: 'Katra, Moradabad, Uttar Pradesh' },
+    description: 'Specialty coffee shop with artisanal brewing methods. Known for their single-origin beans and latte art. Cozy atmosphere with books and board games available.',
+    rating: 4.4,
+    reviewCount: 295,
+    cuisine: 'Cafe',
+    priceRange: 'Moderate',
+    priceLevel: 2,
+    ambiance: 'Cozy',
+    openingHours: '8:00 AM - 9:00 PM',
+    phone: '+91 591 245 1122',
+    amenities: ['wifi', 'books', 'board games'],
+    dietaryOptions: ['vegetarian', 'vegan', 'gluten-free'],
+    imageUrl: 'https://images.unsplash.com/photo-1554115261-2bed223582a0?w=800',
+    isOpen: true,
+  },
+  {
+    id: '27',
+    name: 'Chai Point Express',
+    address: 'Near Railway Station, Moradabad',
+    location: { lat: 28.8398, lng: 78.7821, address: 'Near Railway Station, Moradabad, Uttar Pradesh' },
+    description: 'Quick-service chai and snacks outlet. Famous for their masala chai and quick bites. Perfect for travelers and those in a hurry.',
+    rating: 4.1,
+    reviewCount: 420,
+    cuisine: 'Indian',
+    priceRange: 'Budget',
+    priceLevel: 1,
+    ambiance: 'Quick-service',
+    openingHours: '6:00 AM - 10:00 PM',
+    phone: '+91 591 234 3344',
+    amenities: ['takeaway', 'delivery'],
+    dietaryOptions: ['vegetarian'],
+    imageUrl: 'https://images.unsplash.com/photo-1573496130407-57329f01f045?w=800',
+    isOpen: true,
+  },
+  {
+    id: '28',
+    name: 'The Garden Terrace',
+    address: 'Sector 11, Moradabad',
+    location: { lat: 28.8276, lng: 78.7789, address: 'Sector 11, Moradabad, Uttar Pradesh' },
+    description: 'Beautiful garden cafe with outdoor seating and fresh air. Offers a variety of teas, coffees, and light meals. Perfect for weekend brunches and family outings.',
+    rating: 4.5,
+    reviewCount: 350,
+    cuisine: 'Continental',
+    priceRange: 'Moderate',
+    priceLevel: 2,
+    ambiance: 'Relaxed',
+    openingHours: '9:00 AM - 8:00 PM',
+    phone: '+91 591 256 5566',
+    amenities: ['outdoor seating', 'garden', 'kids friendly', 'parking'],
+    dietaryOptions: ['vegetarian', 'vegan'],
+    imageUrl: 'https://images.unsplash.com/photo-1559056199-641a0ac8b55e?w=800',
+    isOpen: true,
+  },
+  {
+    id: '29',
+    name: 'Midnight Munchies',
+    address: 'Old Delhi Road, Moradabad',
+    location: { lat: 28.8489, lng: 78.7698, address: 'Old Delhi Road, Moradabad, Uttar Pradesh' },
+    description: '24-hour cafe serving late-night snacks and beverages. Popular among night owls and shift workers. Offers a variety of sandwiches, wraps, and hot drinks.',
+    rating: 4.0,
+    reviewCount: 310,
+    cuisine: 'Continental',
+    priceRange: 'Budget',
+    priceLevel: 1,
+    ambiance: 'Casual',
+    openingHours: '24 hours',
+    phone: '+91 591 278 7788',
+    amenities: ['24 hours', 'delivery', 'wifi'],
+    dietaryOptions: ['vegetarian'],
+    imageUrl: 'https://images.unsplash.com/photo-1555396273-367ea4eb4db5?w=800',
+    isOpen: true,
+  },
+  {
+    id: '30',
+    name: 'Artisan Bakers',
+    address: 'Meerut Road, Moradabad',
+    location: { lat: 28.8321, lng: 78.7543, address: 'Meerut Road, Moradabad, Uttar Pradesh' },
+    description: 'Premium bakery and cafe specializing in artisanal breads and pastries. Known for their sourdough bread and French pastries. Great for breakfast and afternoon tea.',
+    rating: 4.6,
+    reviewCount: 275,
+    cuisine: 'Bakery',
+    priceRange: 'Moderate',
+    priceLevel: 2,
+    ambiance: 'Elegant',
+    openingHours: '7:00 AM - 7:00 PM',
+    phone: '+91 591 290 9900',
+    amenities: ['bakery', 'pastry counter', 'takeaway'],
+    dietaryOptions: ['vegetarian', 'vegan options'],
+    imageUrl: 'https://images.unsplash.com/photo-1509440159596-0249088772ff?w=800',
+    isOpen: true,
+  },
+]
+
+// Combine all cafes
+const ALL_MORADABAD_CAFES: Cafe[] = [...MORADABAD_CAFES, ...ADDITIONAL_CAFES]
+
+// Export ALL_MORADABAD_CAFES for use in other routes
+export { ALL_MORADABAD_CAFES }
+
 // Helper function to check if cafe is open
 function isCafeOpen(openingHours: string): boolean {
   if (!openingHours) return true
@@ -282,7 +387,7 @@ export async function POST(request: NextRequest) {
     }
     
     // Seed cafes
-    const cafesToSeed = MORADABAD_CAFES.map(cafe => ({
+    const cafesToSeed = ALL_MORADABAD_CAFES.map(cafe => ({
       ...cafe,
       _id: cafe.id
     }))

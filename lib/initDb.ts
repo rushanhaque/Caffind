@@ -1,6 +1,6 @@
 import dbConnect from './dbConnect';
 import Cafe from '../models/Cafe';
-import { MORADABAD_CAFES } from '../app/api/all-cafes/route';
+import { ALL_MORADABAD_CAFES } from '../app/api/all-cafes/route';
 
 export async function initializeDatabase() {
   try {
@@ -14,7 +14,7 @@ export async function initializeDatabase() {
     }
     
     // Seed cafes
-    const cafesToSeed = MORADABAD_CAFES.map(cafe => ({
+    const cafesToSeed = ALL_MORADABAD_CAFES.map(cafe => ({
       ...cafe,
       // Remove the _id assignment to let MongoDB generate it automatically
     }));
